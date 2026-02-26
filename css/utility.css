@@ -1,3 +1,5 @@
-tc{
-    text-align: center;
+fc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
