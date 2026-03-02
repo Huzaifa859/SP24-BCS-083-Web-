@@ -10,39 +10,58 @@ fc{
   box-sizing: border-box;
 }
 
+/* Added missing dot for class selector and added padding */
+.fc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0; 
+}
+
 .hero {
   width: 100%;
   height: 500px;
   overflow: hidden;
+  position: relative;
 }
 
 .slider {
   display: flex;
-  width: 300%;    /* still 3 slides */
+  width: 300%;    /* 3 slides */
   height: 100%;
   animation: slide 12s infinite;
 }
 
+/* Switched from 100vw to 33.333% to prevent horizontal scrollbar bugs */
 .slide {
-  width: 100vw;    /* full viewport width */
+  width: 33.333%; 
+  height: 100%;
   flex-shrink: 0;
+  position: relative; /* Crucial for positioning text over the image */
 }
 
+/* Switched from contain to cover for a true edge-to-edge banner look */
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover; 
   object-position: center;
 }
 
+/* Overlay text styling */
+.slide-content {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: white; 
+  font-family: sans-serif;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Helps readability over images */
+}
 
+/* Fixed translation math */
 @keyframes slide {
-  0% { transform: translateX(0); }
-  33% { transform: translateX(0); }
-
-  38% { transform: translateX(-100%); }
-  66% { transform: translateX(-100%); }
-
-  71% { transform: translateX(-200%); }
-  100% { transform: translateX(-200%); }
+  0%, 30%   { transform: translateX(0); }
+  35%, 65%  { transform: translateX(-33.333%); }
+  70%, 100% { transform: translateX(-66.666%); }
 }
