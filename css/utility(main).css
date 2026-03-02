@@ -10,7 +10,6 @@ fc{
   box-sizing: border-box;
 }
 
-/* Added missing dot for class selector and added padding */
 .fc {
   display: flex;
   justify-content: center;
@@ -32,7 +31,6 @@ fc{
   animation: slide 12s infinite;
 }
 
-/* Switched from 100vw to 33.333% to prevent horizontal scrollbar bugs */
 .slide {
   width: 33.333%; 
   height: 100%;
@@ -40,7 +38,6 @@ fc{
   position: relative; /* Crucial for positioning text over the image */
 }
 
-/* Switched from contain to cover for a true edge-to-edge banner look */
 .slide img {
   width: 100%;
   height: 100%;
@@ -48,15 +45,24 @@ fc{
   object-position: center;
 }
 
-/* Overlay text styling */
-.slide-content {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
-  color: white; 
-  font-family: sans-serif;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Helps readability over images */
+.overlay-text {
+    position: absolute; 
+    top: 50%;          
+    left: 50%;         
+    transform: translate(-50%, -50%); 
+    text-align: center; 
+    color: white;      
+    /* 2. Apply the newly imported Anton font */
+    font-family: 'Anton', sans-serif; 
+}
+
+.overlay-text h1 {
+    font-size: 80px;      
+    font-weight: 400;     /* Anton only comes in normal weight, which is naturally very thick */
+    margin: 0;            
+    line-height: 1.1;     /* Tightly packs the lines together */
+    letter-spacing: 2px;  
+    text-transform: uppercase; 
 }
 
 /* Fixed translation math */
