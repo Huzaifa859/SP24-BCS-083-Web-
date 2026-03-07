@@ -2,7 +2,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     padding: 20px;
     text-align: center;
-    margin-top: 20px;
+    margin: 50px;
 }
 
 .spotlight h2 {
@@ -14,4 +14,71 @@
 .spotlight p {
     font-size: 16px;
     color: #555;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    row-gap: 40px;
+    column-gap: 15px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #111;
+    text-align: center;
+}
+
+.category-item img {
+    width: 100%;
+    max-width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.category-title {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.category-item:hover .category-title {
+    color: #707070;
+}
+
+.logo2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;;
+}
+
+.nav3 ul {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    list-style: none;
+}
+
+.nav3 ul li {
+    margin-left: 50px;
+    font-weight: bold;
+    color: #111;
+}
+
+.nav3 ul li a {
+    text-decoration: none;
+    color: #111;
+}
+
+.nav3 ul li a:hover {
+    color: #707070;
 }
