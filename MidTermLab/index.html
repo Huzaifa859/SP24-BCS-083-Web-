@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="Assignment1/footer.css">
     <link rel="stylesheet" href="labTask1/responsive.css">
     <link rel="stylesheet" href="Assignment2/dropdown.css">
-    <link rel="stylesheet" href="Assignment2/hamburger.css">
+    <link rel="stylesheet" href="Assignment2/hamburger.css">    
+    <link rel="stylesheet" href="deals.css">
 
 </head>
 
@@ -44,7 +45,7 @@
         <nav class="nav2">
             <ul>
 
-              
+
                 <li>
                     <a href="#">Men</a>
                     <div class="dropdown">
@@ -90,7 +91,7 @@
                     </div>
                 </li>
 
-               
+
                 <li>
                     <a href="#">Women</a>
                     <div class="dropdown">
@@ -136,7 +137,7 @@
                     </div>
                 </li>
 
-                
+
                 <li>
                     <a href="#">Kids</a>
                     <div class="dropdown">
@@ -175,7 +176,7 @@
                     </div>
                 </li>
 
-                
+
                 <li>
                     <a href="#">Jordan</a>
                     <div class="dropdown">
@@ -210,7 +211,7 @@
                     </div>
                 </li>
 
-               
+
                 <li>
                     <a href="#">NikeSKIMS</a>
                     <div class="dropdown">
@@ -235,7 +236,7 @@
                     </div>
                 </li>
 
-                
+
                 <li>
                     <a href="#">Sport</a>
                     <div class="dropdown">
@@ -268,7 +269,7 @@
                     </div>
                 </li>
 
-                
+
                 <li>
                     <a href="#">Sale</a>
                     <div class="dropdown">
@@ -362,6 +363,15 @@
                 </div>
             </div>
         </section>
+
+        <div class="spotlight">
+            <h2>FEATURED DEALS</h2>
+            <p>Grab our top products dynamically fetched just for you.</p>
+        </div>
+
+        <div id="featured-deals" class="category-grid dynamic-grid">
+            <p style="text-align: center; grid-column: 1 / -1;">Loading deals...</p>
+        </div>
 
         <div class="flex-container row-1">
             <div class="item-container">
@@ -524,6 +534,22 @@
                 </ul>
             </div>
         </div>
+        <div id="quick-view-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="modal-body">
+                    <img id="modal-img" src="" alt="Product Image">
+                    <div class="modal-info">
+                        <h2 id="modal-title">Product Title</h2>
+                        <p id="modal-price" class="price"></p>
+                        <p id="modal-rating" class="rating"></p>
+                        <div class="desc-container">
+                            <p id="modal-desc"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="fc">
@@ -574,6 +600,8 @@
     </footer>
 
     <script src="Assignment2/hamburger.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="ajax.js"></script>
 </body>
 
 </html>
