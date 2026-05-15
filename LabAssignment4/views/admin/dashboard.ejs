@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | E-Commerce</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('partials/sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Products Dashboard</h1>
+                <a href="/admin/create" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New Product
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (products.length === 0) { %>
+                                <tr>
+                                    <td colspan="6" class="text-center">No products found.</td>
+                                </tr>
+                            <% } else { %>
+                                <% products.forEach(product => { %>
+                                    <tr>
+                                        <td>
+                                            <div class="table-image">
+                                                <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.src='/img/logo.png'">
+                                            </div>
+                                        </td>
+                                        <td class="font-medium"><%= product.name %></td>
+                                        <td><span class="badge"><%= product.category %></span></td>
+                                        <td class="font-semibold">$<%= product.price %></td>
+                                        <td>
+                                            <% if (product.stock < 10) { %>
+                                                <span class="text-danger font-medium"><%= product.stock %> (Low)</span>
+                                            <% } else { %>
+                                                <%= product.stock %>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="/admin/edit/<%= product._id %>" class="btn-icon btn-edit" title="Edit">
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </a>
+                                                <form action="/admin/delete/<%= product._id %>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
+                                                    <button type="submit" class="btn-icon btn-delete" title="Delete">
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

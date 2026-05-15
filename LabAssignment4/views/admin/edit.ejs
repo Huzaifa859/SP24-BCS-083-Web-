@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <%- include('partials/sidebar') %>
+        
+        <main class="admin-content">
+            <div class="admin-header">
+                <div>
+                    <a href="/admin" class="back-link">← Back to Dashboard</a>
+                    <h1>Edit Product</h1>
+                </div>
+            </div>
+
+            <div class="card form-card">
+                <form action="/admin/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Product Name *</label>
+                            <input type="text" id="name" name="name" required value="<%= product.name %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category *</label>
+                            <select id="category" name="category" required>
+                                <option value="Shoes" <%= product.category === 'Shoes' ? 'selected' : '' %>>Shoes</option>
+                                <option value="Clothing" <%= product.category === 'Clothing' ? 'selected' : '' %>>Clothing</option>
+                                <option value="Accessories" <%= product.category === 'Accessories' ? 'selected' : '' %>>Accessories</option>
+                                <option value="Equipment" <%= product.category === 'Equipment' ? 'selected' : '' %>>Equipment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Price ($) *</label>
+                            <input type="number" id="price" name="price" required min="0" step="0.01" value="<%= product.price %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock">Current Stock *</label>
+                            <input type="number" id="stock" name="stock" required min="0" value="<%= product.stock %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rating">Rating (0-5)</label>
+                            <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" value="<%= product.rating %>">
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width" style="margin-top: 1.5rem;">
+                        <label>Current Image</label>
+                        <div class="current-image-preview">
+                            <img src="<%= product.image %>" alt="<%= product.name %>" style="max-height: 150px; border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width" style="margin-top: 1.5rem;">
+                        <label for="image">Replace Image (Optional)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="image" name="image" accept="image/*">
+                            <p class="help-text">Leave blank to keep the current image.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Update Product</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
