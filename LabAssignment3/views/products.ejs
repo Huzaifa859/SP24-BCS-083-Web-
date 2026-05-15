@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Product Catalog | Nike Clone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Connecting existing styles from root -->
+    <link rel="stylesheet" href="/Assignment1/style.css">
+    <link rel="stylesheet" href="/Assignment2/hamburger.css">
+    <!-- Assignment 3 specific modern styling -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="h1">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li>|</li>
+                <li><a href="/admin">Admin Panel</a></li>
+                <li>|</li>
+                <li><a href="#">Help</a></li>
+                <li>|</li>
+                <% if (user) { %>
+                    <li><a href="#">Welcome, <%= user.name %></a></li>
+                    <li>|</li>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/register">Join Us</a></li>
+                    <li>|</li>
+                    <li><a href="/login">Sign In</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <header class="h2">
+        <div class="logo">
+            <a href="/"><img src="/img/logo.png" alt="Nike Logo" id="logo1" style="height: 60px;"></a>
+        </div>
+        <nav class="nav2">
+            <ul>
+                <li><a href="/products?category=Shoes" class="<%= category === 'Shoes' ? 'active-nav' : '' %>">Shoes</a></li>
+                <li><a href="/products?category=Clothing" class="<%= category === 'Clothing' ? 'active-nav' : '' %>">Clothing</a></li>
+                <li><a href="/products?category=Accessories" class="<%= category === 'Accessories' ? 'active-nav' : '' %>">Accessories</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="catalog-main">
+        <div class="catalog-header">
+            <h1>All Products</h1>
+            <% if (success_msg && success_msg.length > 0) { %>
+                <div class="error-banner" style="background-color: #dcfce7; color: #166534;">
+                    <%= success_msg %>
+                </div>
+            <% } %>
+            <% if (error_msg && error_msg.length > 0) { %>
+                <div class="error-banner" style="background-color: #fee2e2; color: #991b1b;">
+                    <%= error_msg %>
+                </div>
+            <% } %>
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="error-banner">
+                    <%= error %>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="catalog-container">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar-filters">
+                <form action="/products" method="GET" id="filterForm">
+                    <!-- Search -->
+                    <div class="filter-group">
+                        <label for="search">Search</label>
+                        <div class="search-input-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="search" name="search" placeholder="Search products..." value="<%= search %>">
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="All" <%= category === 'All' ? 'selected' : '' %>>All Categories</option>
+                            <option value="Shoes" <%= category === 'Shoes' ? 'selected' : '' %>>Shoes</option>
+                            <option value="Clothing" <%= category === 'Clothing' ? 'selected' : '' %>>Clothing</option>
+                            <option value="Accessories" <%= category === 'Accessories' ? 'selected' : '' %>>Accessories</option>
+                            <option value="Equipment" <%= category === 'Equipment' ? 'selected' : '' %>>Equipment</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <label>Price Range ($)</label>
+                        <div class="price-inputs">
+                            <input type="number" name="minPrice" placeholder="Min" value="<%= minPrice %>" min="0">
+                            <span>-</span>
+                            <input type="number" name="maxPrice" placeholder="Max" value="<%= maxPrice %>" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Sorting -->
+                    <div class="filter-group">
+                        <label for="sort">Sort By</label>
+                        <select id="sort" name="sort">
+                            <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Newest Arrivals</option>
+                            <option value="price_asc" <%= sort === 'price_asc' ? 'selected' : '' %>>Price: Low to High</option>
+                            <option value="price_desc" <%= sort === 'price_desc' ? 'selected' : '' %>>Price: High to Low</option>
+                            <option value="rating_desc" <%= sort === 'rating_desc' ? 'selected' : '' %>>Top Rated</option>
+                            <option value="name_asc" <%= sort === 'name_asc' ? 'selected' : '' %>>Name: A-Z</option>
+                        </select>
+                    </div>
+
+                    <!-- Reset Page on Filter Submit -->
+                    <input type="hidden" name="page" value="1">
+
+                    <button type="submit" class="apply-filters-btn">Apply Filters</button>
+                    <a href="/products" class="clear-filters-btn">Clear All</a>
+                </form>
+            </aside>
+
+            <!-- Product Grid -->
+            <section class="products-content">
+                <div class="products-top-bar">
+                    <p class="results-count">
+                        Showing results 
+                        <% if (products.length > 0) { %>
+                            <%= ((currentPage - 1) * 8) + 1 %> - <%= ((currentPage - 1) * 8) + products.length %>
+                        <% } else { %>
+                            0
+                        <% } %>
+                    </p>
+                </div>
+
+                <% if (products.length === 0) { %>
+                    <div class="no-products">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <h2>No products found</h2>
+                        <p>Try adjusting your filters or search term.</p>
+                    </div>
+                <% } else { %>
+                    <div class="product-grid">
+                        <% products.forEach(product => { %>
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="<%= product.image || '/img/logo.png' %>" alt="<%= product.name %>" class="product-image" onerror="this.src='/img/logo.png'">
+                                    <% if (product.stock < 10) { %>
+                                        <span class="badge low-stock">Low Stock</span>
+                                    <% } else if (product.rating > 4.7) { %>
+                                        <span class="badge top-rated">Top Rated</span>
+                                    <% } %>
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-header">
+                                        <h3 class="product-name"><%= product.name %></h3>
+                                        <span class="product-price">$<%= product.price %></span>
+                                    </div>
+                                    <p class="product-category"><%= product.category %></p>
+                                    <div class="product-footer">
+                                        <div class="product-rating">
+                                            <span class="star">★</span>
+                                            <span><%= product.rating %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+
+                <!-- Pagination -->
+                <% if (totalPages > 1) { %>
+                    <div class="pagination">
+                        <% 
+                        // Rebuild query string for pagination links
+                        let qs = `&search=${search}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}&sort=${sort}`;
+                        %>
+                        
+                        <a href="?page=<%= currentPage - 1 %><%= qs %>" class="page-link <%= currentPage === 1 ? 'disabled' : '' %>">Previous</a>
+                        
+                        <div class="page-numbers">
+                            <% for(let i = 1; i <= totalPages; i++) { %>
+                                <% if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { %>
+                                    <a href="?page=<%= i %><%= qs %>" class="page-number <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                                <% } else if (i === currentPage - 2 || i === currentPage + 2) { %>
+                                    <span class="page-dots">...</span>
+                                <% } %>
+                            <% } %>
+                        </div>
+
+                        <a href="?page=<%= currentPage + 1 %><%= qs %>" class="page-link <%= currentPage === totalPages ? 'disabled' : '' %>">Next</a>
+                    </div>
+                <% } %>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

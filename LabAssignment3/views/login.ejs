@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Nike Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Assignment1/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f5; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .auth-card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .auth-card img { height: 40px; margin-bottom: 1.5rem; }
+        .auth-card h2 { margin: 0 0 1.5rem; font-weight: 700; font-size: 1.5rem; }
+        .form-group { text-align: left; margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .form-group input:focus { border-color: #111; outline: none; }
+        .btn-black { background: #111; color: white; border: none; padding: 0.75rem; width: 100%; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1rem; margin-top: 1rem; }
+        .btn-black:hover { background: #333; }
+        .auth-links { margin-top: 1.5rem; font-size: 0.9rem; color: #555; }
+        .auth-links a { color: #111; font-weight: 600; text-decoration: none; }
+        .alert { padding: 0.75rem; margin-bottom: 1rem; border-radius: 6px; font-size: 0.9rem; text-align: left; }
+        .alert-error { background-color: #fee2e2; color: #991b1b; }
+        .alert-success { background-color: #dcfce7; color: #166534; }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <a href="/"><img src="/img/logo.png" alt="Nike Logo"></a>
+        <h2>YOUR ACCOUNT FOR EVERYTHING NIKE</h2>
+
+        <% if (success_msg && success_msg.length > 0) { %>
+            <div class="alert alert-success"><%= success_msg %></div>
+        <% } %>
+        <% if (error_msg && error_msg.length > 0) { %>
+            <div class="alert alert-error"><%= error_msg %></div>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn-black">SIGN IN</button>
+        </form>
+        <div class="auth-links">
+            Not a Member? <a href="/register">Join Us.</a>
+        </div>
+    </div>
+</body>
+</html>
